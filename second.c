@@ -1,4 +1,4 @@
-int main_1(void) {
+int dummy(void) {
     while(1) {}
     return 0;
 }
