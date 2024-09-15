@@ -10,21 +10,29 @@ OBJS=$(patsubst %.c,%.o,$(SRC))
 all: firmware.elf
 
 clean:
-	rm -f *.i *.txt *.o *.s *.elf
+	rm -f *.txt *.o *.i *.s *.elf
+
+hello.txt:
+	echo "hello world!" > hello.txt
 
 %.i: %.c
 	$(CPP) $< > $@
 
 %.s: %.i
-	$(CC) $< -S $@
+	$(CC) -S $<
 
 %.o: %.s
 	$(AS) $< -o $@
 
+%.elf: %.o
+	$(LD) $< -o $@
+
+OBJS=main.o second.o
+
 firmware.elf: $(OBJS)
 	$(LD) -o $@ $^
 
-hello.txt:
-	echo "hello world!" > hello.txt
+%.img: %.elf
+	$(OBJCOPY) $< -O binary $@
 
 .PHONY: all clean
