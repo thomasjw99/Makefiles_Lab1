@@ -1,4 +1,4 @@
 int main(void) {
     while(1);
-    return 21;
+    return 20;
 }
